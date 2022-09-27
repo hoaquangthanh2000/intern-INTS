@@ -1,38 +1,15 @@
 import './App.css';
 import { useState } from 'react';
+import Content from './content';
 
 
 function App() { 
-  const storageJob = JSON.parse(localStorage.getItem('jobs'))
-  const [todo,setTodo] = useState('')
-  const [todos,setTodos] = useState(storageJob ?? [])
-  
-  const handleAddTodo = () => {
-    setTodos(prev => {
-      const newJob = [...prev,todo]
-      const jsonJob = JSON.stringify(newJob)
-      localStorage.setItem('jobs', jsonJob)
-      return newJob
-    })
-    setTodo('')
-  }
+  const [show,setShow] = useState(false)
 
   return (
     <div style={{padding:32}}>
-      <input
-      value={todo}
-        onChange={(e) => setTodo(e.target.value)}
-      />
-      <button onClick={handleAddTodo}>Add</button>
-
-      <ul>
-        {
-          todos.map((item,index) => (
-            <li key={index}>{item}</li>
-          ))
-        }
-        
-      </ul>
+      <button onClick={() => setShow(!show)}>Toggle</button>
+      {show && <Content/>}
     </div>
   );
 }
